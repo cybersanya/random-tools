@@ -2,7 +2,7 @@
 import { Textarea, Button, Chip } from 'primevue'
 import { computed, ref } from 'vue'
 
-const optionsAsText = ref('')
+const optionsAsText = ref('apple\nbanana\norange')
 const splitOptions = computed(() =>
   optionsAsText.value
     .split(/[\n;,]+/)
