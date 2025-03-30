@@ -24,4 +24,9 @@ export default defineConfig([
     languageOptions: { parserOptions: { parser: tseslint.parser } },
   },
   eslintConfigPrettier,
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off'
+    }
+  }
 ])

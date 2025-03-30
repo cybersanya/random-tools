@@ -1,40 +1,15 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import FirstStep from './components/FirstStep.vue'
-import SecondStep from './components/SecondStep.vue'
-import ThirdStep from './components/ThirdStep.vue'
-
-const step = ref(0)
-const options = ref<string[]>([])
-
-function handleFirstStepSubmit(value: string[]) {
-  options.value = value
-  step.value = 1
-}
-
-const sortedOptions = ref<string[]>([])
-function handleSecondStepSubmit(value: string[]) {
-  sortedOptions.value = value
-  step.value = 2
-}
-
-function reset() {
-  step.value = 0
-}
-</script>
-
 <template>
   <div class="container">
-    <FirstStep v-if="step === 0" @continue="handleFirstStepSubmit" />
-    <SecondStep
-      v-else-if="step === 1"
-      :options
-      @submit="handleSecondStepSubmit"
-      @reset="reset"
-    />
-    <ThirdStep v-else-if="step === 2" :options="sortedOptions" @reset="reset" />
+    <Menu />
+    <div class="main">
+      <RouterView />
+    </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import Menu from './components/Menu.vue'
+</script>
 
 <style>
 body {
@@ -47,7 +22,13 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
+  display: flex;
+  gap: 32px;
+}
+
+.main {
+  flex-grow: 1;
 }
 </style>

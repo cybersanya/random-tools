@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Button } from 'primevue'
-import { sortAsync } from '../utils/sortAsync'
+import { sortAsync } from '../sortAsync'
 import { ref } from 'vue'
 import { until } from '@vueuse/core'
 
