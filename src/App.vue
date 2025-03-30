@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { Textarea } from 'primevue'
-import { ref } from 'vue'
-
-const optionsAsText = ref('')
+import FirstStep from './components/FirstStep.vue'
 </script>
 
 <template>
-  <Textarea v-model="optionsAsText" rows="10" auto-resize />
+  <FirstStep />
 </template>
 
 <style>
