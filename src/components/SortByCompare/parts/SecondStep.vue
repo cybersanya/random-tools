@@ -35,9 +35,19 @@ sortAsync(options, compare).then((result) => {
 <template>
   <h4>Что лучше?</h4>
   <div class="choise">
-    <Button size="large" :label="firstOption" @click="compareResult = 1" />
+    <Button
+      size="large"
+      :label="firstOption"
+      outlined
+      @click="compareResult = 1"
+    />
     или
-    <Button size="large" :label="secondOption" @click="compareResult = -1" />
+    <Button
+      size="large"
+      :label="secondOption"
+      outlined
+      @click="compareResult = -1"
+    />
   </div>
   <div class="actions">
     <Button label="Назад" severity="secondary" @click="emit('reset')" />
@@ -45,6 +55,10 @@ sortAsync(options, compare).then((result) => {
 </template>
 
 <style scoped>
+h4 {
+  margin: 0;
+}
+
 .options {
   display: flex;
   flex-wrap: wrap;
@@ -52,6 +66,7 @@ sortAsync(options, compare).then((result) => {
 }
 
 .choise {
+  margin-top: 16px;
   display: flex;
   gap: 16px;
   align-items: center;

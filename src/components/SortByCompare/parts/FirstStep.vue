@@ -23,7 +23,7 @@ function submit() {
   <h4>Введи список который нужно отсортировать</h4>
   <p>Элементы могут быть разделены переносом строки или запятой</p>
   <Textarea v-model="optionsAsText" rows="5" auto-resize fluid />
-  <h4>Итоговый список:</h4>
+  <p>Итоговый список:</p>
   <div v-if="splitOptions.length" class="options">
     <Chip v-for="(option, index) in splitOptions" :key="index">
       {{ index + 1 }}. {{ option }}
@@ -36,6 +36,9 @@ function submit() {
 </template>
 
 <style scoped>
+h4 {
+  margin: 0;
+}
 .options {
   display: flex;
   flex-wrap: wrap;

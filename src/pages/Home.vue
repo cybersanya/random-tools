@@ -38,4 +38,10 @@ h1 {
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
+
+@media screen and (max-width: 700px) {
+  .catalog {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 </style>

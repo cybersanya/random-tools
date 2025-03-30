@@ -24,7 +24,11 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
+h4 {
+  margin: 0;
+}
 .options {
+  margin-top: 16px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;

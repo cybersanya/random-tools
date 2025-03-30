@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "lint": "npx eslint . && npx prettier .",
+    "lint:fix": "npx eslint . --fix && npx prettier . --write",
     "preview": "vite preview"
   },
   "optionalDependencies": {
