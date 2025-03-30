@@ -21,9 +21,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Menu } from 'primevue'
-import { type MenuItem } from 'primevue/menuitem'
 
-const items = ref<MenuItem[]>([
+const items = ref([
   { label: 'Главная', icon: 'pi pi-home', route: '/' },
   { label: 'Сортировщик', icon: 'pi pi-sort', route: '/sorter' },
 ])

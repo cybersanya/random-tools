@@ -8,6 +8,9 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
+  },
   "dependencies": {
     "@primeuix/themes": "^1.0.0",
     "@vueuse/core": "^13.0.0",
