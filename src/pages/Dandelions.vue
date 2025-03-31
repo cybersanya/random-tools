@@ -1,6 +1,12 @@
 <template>
   <div class="dandelions" :class="breakpointClass">
     <div class="field">
+      <div class="status">
+        <span>Ход {{ flowerCoordinates.length }} / 7</span>
+        <span>
+          Очередь {{ currentMove === 'dandelions' ? 'одуванчиков' : 'ветра' }}
+        </span>
+      </div>
       <div v-for="(row, y) in transposedMatrix" :key="y" class="row">
         <div
           v-for="cell in row"
@@ -40,6 +46,12 @@
         :severity="isGameEnded ? 'primary' : 'secondary'"
         @click="reset"
       />
+      <Button
+        label="Правила"
+        fluid
+        outlined
+        @click="isVisibleRulesDialog = true"
+      />
     </div>
   </div>
   <Dialog
@@ -51,6 +63,41 @@
     <p class="win-text">{{ winDialogText }}</p>
     <div class="flex justify-end gap-2">
       <Button label="Начать заново" fluid @click="reset" />
+    </div>
+  </Dialog>
+  <Dialog
+    v-model:visible="isVisibleRulesDialog"
+    modal
+    header="Правила игры"
+    :style="{ width: '25rem' }"
+  >
+    <p class="win-text">
+      Играют двое. Первый игрок играет за одуванчики, второй - за ветер.
+    </p>
+    <p>
+      Цель одуванчиков - засеять все игровое поле одуванчиками или их семенами.
+    </p>
+    <p>Цель ветра - оставить хотя бы одну клетку пустой.</p>
+
+    <p>
+      Первыми ходят одуванчики. Они могут посадить одуванчик в любую клетку
+      поля, за исключением занятых другими одуванчиками.
+    </p>
+    <p>
+      Далее ходит ветер. Он может выбрать одно из 8 направлений, в котором будет
+      дуть ветер. В этом направлении от всех одуванчиков на поле разлетятся
+      семена. Если ветер использовал какое-то из направлений - второй раз его
+      использовать уже нельзя.
+    </p>
+    <p>
+      Далее снова ходят одуванчики и так по кругу. Игра заканчивается когда
+      ветер использовал 7 из 8 доступных направлений. Если после этого на поле
+      осталась хотя бы одна пустая клетка - ветер выиграл. Если пустой клетки
+      нет - выиграли одуванчики
+    </p>
+
+    <div class="flex justify-end gap-2">
+      <Button label="Играть" fluid @click="isVisibleRulesDialog = false" />
     </div>
   </Dialog>
 </template>
@@ -196,9 +243,16 @@ function reset() {
 
 const currentMove = ref<'wind' | 'dandelions' | null>('dandelions')
 const isGameEnded = computed(() => !currentMove.value)
+
+const isVisibleRulesDialog = ref(false)
 </script>
 
 <style scoped>
+.status {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
 .dandelions {
   display: grid;
   gap: 32px;
@@ -304,5 +358,14 @@ const isGameEnded = computed(() => !currentMove.value)
 .win-text {
   margin-top: 0;
   margin-bottom: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.bp-desktop .actions {
+  flex-direction: column;
 }
 </style>
