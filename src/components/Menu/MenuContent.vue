@@ -23,5 +23,6 @@ import { Menu } from 'primevue'
 const items = ref([
   { label: 'Главная', icon: 'pi pi-home', route: '/' },
   { label: 'Сортировщик', icon: 'pi pi-sort', route: '/sorter' },
+  { label: 'Одуванчики', icon: 'pi pi-asterisk', route: '/dandelions' },
 ])
 </script>

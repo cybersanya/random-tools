@@ -16,6 +16,13 @@
       icon="pi pi-sort"
       route="/sorter"
     />
+    <FeatureCard
+      title="Одуванчики"
+      description="Забавная игра, в которую обычно играют с карандашом и бумагой"
+      button="Перейти"
+      icon="pi pi-asterisk"
+      route="/dandelions"
+    />
   </div>
 </template>
 
