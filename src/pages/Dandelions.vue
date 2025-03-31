@@ -2,7 +2,7 @@
   <div class="dandelions" :class="breakpointClass">
     <div class="field">
       <div class="status">
-        <span>Ход {{ flowerCoordinates.length }} / 7</span>
+        <span>Ход {{ flowerCoordinates.length }} / {{ moveLimit }}</span>
         <span>
           Очередь {{ currentMove === 'dandelions' ? 'одуванчиков' : 'ветра' }}
         </span>
@@ -42,15 +42,24 @@
     <div class="actions">
       <Button
         label="Начать заново"
+        icon="pi pi-replay"
         fluid
         :severity="isGameEnded ? 'primary' : 'secondary'"
         @click="reset"
       />
       <Button
         label="Правила"
+        icon="pi pi-info-circle"
         fluid
         outlined
         @click="isVisibleRulesDialog = true"
+      />
+      <Button
+        label="Настройки"
+        icon="pi pi-cog"
+        fluid
+        outlined
+        @click="isVisibleSettingsDialog = true"
       />
     </div>
   </div>
@@ -61,8 +70,48 @@
     :style="{ width: '25rem' }"
   >
     <p class="win-text">{{ winDialogText }}</p>
-    <div class="flex justify-end gap-2">
+    <div class="modal-actions">
       <Button label="Начать заново" fluid @click="reset" />
+    </div>
+  </Dialog>
+  <Dialog
+    v-model:visible="isVisibleSettingsDialog"
+    modal
+    header="Настройки"
+    :style="{ width: '25rem' }"
+  >
+    <div class="settings">
+      <IftaLabel>
+        <InputNumber
+          id="dimension"
+          v-model="dimension"
+          fluid
+          :min="2"
+          :step="1"
+        />
+        <label for="dimension">Размер поля</label>
+      </IftaLabel>
+      <IftaLabel>
+        <InputNumber
+          id="moveLimit"
+          v-model="moveLimit"
+          fluid
+          :max="8"
+          :min="1"
+          :step="1"
+        />
+        <label for="moveLimit">Число ходов</label>
+      </IftaLabel>
+    </div>
+
+    <div class="modal-actions">
+      <Button
+        label="Cбросить"
+        fluid
+        severity="secondary"
+        @click="restoreSettings"
+      />
+      <Button label="Играть" fluid @click="reset" />
     </div>
   </Dialog>
   <Dialog
@@ -96,7 +145,7 @@
       нет - выиграли одуванчики
     </p>
 
-    <div class="flex justify-end gap-2">
+    <div class="modal-actions">
       <Button label="Играть" fluid @click="isVisibleRulesDialog = false" />
     </div>
   </Dialog>
@@ -104,7 +153,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, Dialog } from 'primevue'
+import { Button, Dialog, InputNumber, IftaLabel } from 'primevue'
 import { useBreakpoints } from '../composables'
 
 const { breakpointClass } = useBreakpoints()
@@ -124,6 +173,7 @@ function transpose<T>(matrix: T[][]) {
 const transposedMatrix = computed(() => transpose(fieldMatrix.value))
 
 const dimension = ref(5)
+const moveLimit = ref(7)
 
 function initMatrix() {
   fieldMatrix.value = Array(dimension.value)
@@ -210,7 +260,7 @@ function checkWinningConditions() {
     currentMove.value = null
     handleDandelionsWin()
   } else if (
-    flowerCoordinates.value.length === 7 &&
+    flowerCoordinates.value.length === moveLimit.value &&
     currentMove.value === 'dandelions'
   ) {
     currentMove.value = null
@@ -239,12 +289,20 @@ function reset() {
   currentMove.value = 'dandelions'
   initMatrix()
   isVisibleWinDialog.value = false
+  isVisibleSettingsDialog.value = false
+  isVisibleRulesDialog.value = false
+}
+
+function restoreSettings() {
+  dimension.value = 5
+  moveLimit.value = 7
 }
 
 const currentMove = ref<'wind' | 'dandelions' | null>('dandelions')
 const isGameEnded = computed(() => !currentMove.value)
 
 const isVisibleRulesDialog = ref(false)
+const isVisibleSettingsDialog = ref(false)
 </script>
 
 <style scoped>
@@ -305,6 +363,13 @@ const isVisibleRulesDialog = ref(false)
 
   &.active {
     box-shadow: 0 0 0 1px var(--p-primary-400);
+    cursor: pointer;
+
+    transition: background-color 0.1s;
+
+    &:hover {
+      background-color: var(--p-primary-900);
+    }
   }
 }
 
@@ -367,5 +432,17 @@ const isVisibleRulesDialog = ref(false)
 
 .bp-desktop .actions {
   flex-direction: column;
+}
+
+.modal-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 </style>
